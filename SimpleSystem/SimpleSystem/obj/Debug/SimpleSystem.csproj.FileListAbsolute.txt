@@ -1,0 +1,14 @@
+D:\ProjetoC#\SimpleSystem\SimpleSystem\bin\Debug\SimpleSystem.exe.config
+D:\ProjetoC#\SimpleSystem\SimpleSystem\bin\Debug\SimpleSystem.exe
+D:\ProjetoC#\SimpleSystem\SimpleSystem\bin\Debug\SimpleSystem.pdb
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.csproj.AssemblyReference.cache
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.Menu.resources
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.Properties.Resources.resources
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.csproj.GenerateResource.cache
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.csproj.CoreCompileInputs.cache
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.exe
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.pdb
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.Forms.frmCliente.resources
+D:\ProjetoC#\SimpleSystem\SimpleSystem\bin\Debug\Newtonsoft.Json.dll
+D:\ProjetoC#\SimpleSystem\SimpleSystem\bin\Debug\Newtonsoft.Json.xml
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.csproj.CopyComplete

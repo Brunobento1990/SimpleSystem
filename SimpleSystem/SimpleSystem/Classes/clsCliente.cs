@@ -41,39 +41,48 @@ namespace SimpleSystem.Classe
         public string DDD { get; set; }
         [JsonProperty(PropertyName = "siafi")]
         public string Siafi { get; set; }
+        public int Id_Reprasentante { get; set; }
+        private string Conexao { get; set; } = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=SimpleSystem;Data Source=Bruno";
 
         public clsCliente()
         {
         }
         public void Gravar()
         {
-           // bool Ok = true;
             try
             {
-                string Coneccao = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=SimpleSystem;Data Source=Bruno";
-                SqlConnection cnn;
-                cnn = new SqlConnection(Coneccao);
-                string insert = "insert into Cliente values ('" + this.Ativo + "','" + this.Nome + "','" + this.Cpf + "','" + this.Numero + "','" + this.Tipo_Pessoa + "'," +
-                    "'" + this.Telefone + "','" + this.Email + "','" + this.Data_Nascimento + "','" + this.Rg + "','" + this.Obs + "','"+this.Pais+"','" + this.Cep + "','" + this.Logradouro + "'," +
-                    "'" + this.Complemento + "','" + this.Bairro + "', '" + this.Localidade + "','" + this.Uf + "','" + this.Ibge + "','" + this.Gia + "'," +
-                    "'" + this.DDD + "','" + this.Siafi + "')";
-                SqlCommand sqlComm = new SqlCommand();
-                sqlComm.Connection = cnn;
-                sqlComm.CommandType = CommandType.Text;
-                sqlComm.CommandText = insert;
-                sqlComm.Connection.Open();
-                sqlComm.ExecuteNonQuery();
-                sqlComm.Connection.Close();
-                cnn.Close();
-                MessageBox.Show("Cliente cadastrado com sucesso");
+                using (var cnn = new SqlConnection(this.Conexao))
+                {
 
+                    string sql = @"insert into Cliente (Ativo,Nome,Cpf,Numero,Tipo_Pessoa,Telefone,Email,Data_Nascimento,Rg,Obs,Pais,Cep,Logradouro,Complemento,Bairro,Localidade,Uf,Id_Representante) values (@ativo,@nome,@cpf,@numero,@tipo_Pessoa,@telefone,@email,@data_Nascimento,@rg,@obs,@pais,@cep,@logradouro,@complemento,@bairro,@localidade,@uf,@id_Reprasentante)";
+                    SqlCommand sqlComm = new SqlCommand(sql, cnn);
+                    sqlComm.Parameters.AddWithValue("@ativo", this.Ativo);
+                    sqlComm.Parameters.AddWithValue("@nome", this.Nome);
+                    sqlComm.Parameters.AddWithValue("@cpf", this.Cpf);
+                    sqlComm.Parameters.AddWithValue("@numero", this.Numero);
+                    sqlComm.Parameters.AddWithValue("@tipo_Pessoa", this.Tipo_Pessoa);
+                    sqlComm.Parameters.AddWithValue("@telefone", this.Telefone);
+                    sqlComm.Parameters.AddWithValue("@email", this.Email);
+                    sqlComm.Parameters.AddWithValue("@data_Nascimento", this.Data_Nascimento);
+                    sqlComm.Parameters.AddWithValue("@rg", this.Rg);
+                    sqlComm.Parameters.AddWithValue("@obs", this.Obs);
+                    sqlComm.Parameters.AddWithValue("@pais", this.Pais);
+                    sqlComm.Parameters.AddWithValue("@cep", this.Cep);
+                    sqlComm.Parameters.AddWithValue("@logradouro", this.Logradouro);
+                    sqlComm.Parameters.AddWithValue("@complemento", this.Complemento);
+                    sqlComm.Parameters.AddWithValue("@bairro", this.Bairro);
+                    sqlComm.Parameters.AddWithValue("@localidade", this.Localidade);
+                    sqlComm.Parameters.AddWithValue("@uf", this.Uf);
+                    sqlComm.Parameters.AddWithValue("@id_Reprasentante", this.Id_Reprasentante);
+                    sqlComm.Connection.Open();
+                    sqlComm.ExecuteNonQuery();
+                    MessageBox.Show("Cliente cadastrado com sucesso", "Simple System");
+                }
             }
             catch (SqlException e)
             {
-
                 MessageBox.Show("Erro na conexão com o banco de dados" + e.Errors + e.ErrorCode);
             }
-            //return Ok;
         }
         public clsCliente Carregar(string id)
         {

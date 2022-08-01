@@ -73,6 +73,7 @@ namespace SimpleSystem.Forms
             txtcomplemento.Enabled = false;
             txtpais.Enabled = false;
             txtcnpj.Enabled = false;
+            comboBox1.Enabled = false;
         }
         private void LiberarCampo()
         {
@@ -92,6 +93,7 @@ namespace SimpleSystem.Forms
             checkfisica.Enabled = true;
             checkjuridica.Enabled = true;
             btnpesquisarcep.Enabled = true;
+            comboBox1.Enabled = true;
         }
 
         private void checkfisica_CheckedChanged(object sender, EventArgs e)
@@ -158,13 +160,11 @@ namespace SimpleSystem.Forms
             {
                 cliente1.Cpf = txtcnpj.Text;
             }
-             //Regex.Replace(txtcpf.Text.ToString(), @"[^\w\.@-]", "",
-                               // RegexOptions.None, TimeSpan.FromSeconds(1.5));//txtcpf.Text;
             cliente1.Rg = txtrg.Text;
             cliente1.Telefone = txttelefone.Text;
             cliente1.Data_Nascimento = txtdatanascimento.Text;
             cliente1.Email = txtemail.Text;
-            cliente1.Obs = txtobs.Text;
+            cliente1.Obs = txtobs1.Text;
             cliente1.Pais = txtpais.Text;
             cliente1.Numero = txtnumero.Text;
 
@@ -183,6 +183,7 @@ namespace SimpleSystem.Forms
             cliente1.Uf = txtuf.Text;
             cliente1.Logradouro = txtrua.Text;
             cliente1.Complemento = txtcomplemento.Text;
+            cliente1.Id_Reprasentante = (int)comboBox1.SelectedValue;
             cliente1.Gravar();
             BloquearCampo();
         }
@@ -233,22 +234,24 @@ namespace SimpleSystem.Forms
 
         private void frmCliente_Load(object sender, EventArgs e)
         {
-            txtobs.TextChanged += txtobs_TextChanged;
-            txtobs.Multiline = true;
-            AutoSizeTextBox(txtobs);
+            // TODO: esta linha de código carrega dados na tabela 'simpleSystemDataSet.Representante'. Você pode movê-la ou removê-la conforme necessário.
+            this.representanteTableAdapter.Fill(this.simpleSystemDataSet.Representante);
+            //txtobs1.TextChanged += txtobs_TextChanged;
+            //txtobs1.Multiline = true;
+            //AutoSizeTextBox(txtobs1);
         }
 
         private void txtobs_TextChanged(object sender, EventArgs e)
         {
-            AutoSizeTextBox(txtobs);
+            //AutoSizeTextBox(txtobs1);
         }
 
         private void AutoSizeTextBox(TextBox txtobs)
         {
-            const int margin_x = 100;
-            const int margin_y = 16;
-            Size tamanho = TextRenderer.MeasureText(txtobs.Text, txtobs.Font);
-            txtobs.ClientSize = new Size(tamanho.Width + margin_x, tamanho.Height + margin_y);
+            //const int margin_x = 100;
+            //const int margin_y = 16;
+            //Size tamanho = TextRenderer.MeasureText(txtobs.Text, txtobs.Font);
+            //txtobs.ClientSize = new Size(tamanho.Width + margin_x, tamanho.Height + margin_y);
         }
 
         private void btncancelar_Click(object sender, EventArgs e)
@@ -256,6 +259,16 @@ namespace SimpleSystem.Forms
             BloquearCampo();
             tabControl1.SelectedTab = tabPage1;
             return;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void representanteBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

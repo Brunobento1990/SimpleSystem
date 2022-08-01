@@ -12,3 +12,4 @@ D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.Forms.frmCliente.r
 D:\ProjetoC#\SimpleSystem\SimpleSystem\bin\Debug\Newtonsoft.Json.dll
 D:\ProjetoC#\SimpleSystem\SimpleSystem\bin\Debug\Newtonsoft.Json.xml
 D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.csproj.CopyComplete
+D:\ProjetoC#\SimpleSystem\SimpleSystem\obj\Debug\SimpleSystem.Forms.frmRepresentante.resources

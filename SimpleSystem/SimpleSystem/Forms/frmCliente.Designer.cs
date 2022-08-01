@@ -29,17 +29,22 @@ namespace SimpleSystem.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCliente));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.representanteBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.simpleSystemDataSet = new SimpleSystem.SimpleSystemDataSet();
             this.txtrg = new System.Windows.Forms.MaskedTextBox();
             this.txttelefone = new System.Windows.Forms.MaskedTextBox();
             this.txtdatanascimento = new System.Windows.Forms.MaskedTextBox();
             this.txtcnpj = new System.Windows.Forms.MaskedTextBox();
             this.txtcpf = new System.Windows.Forms.MaskedTextBox();
             this.labelobs = new System.Windows.Forms.Label();
-            this.txtobs = new System.Windows.Forms.TextBox();
+            this.txtobs1 = new System.Windows.Forms.TextBox();
             this.groupendereco = new System.Windows.Forms.GroupBox();
             this.txtcep = new System.Windows.Forms.TextBox();
             this.txtpais = new System.Windows.Forms.TextBox();
@@ -75,8 +80,13 @@ namespace SimpleSystem.Forms
             this.btnexcluir = new System.Windows.Forms.Button();
             this.btnsalvar = new System.Windows.Forms.Button();
             this.btncancelar = new System.Windows.Forms.Button();
+            this.representanteTableAdapter = new SimpleSystem.SimpleSystemDataSetTableAdapters.RepresentanteTableAdapter();
+            this.txtobs = new System.Windows.Forms.TextBox();
+            this.btnalterar = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.representanteBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.simpleSystemDataSet)).BeginInit();
             this.groupendereco.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,7 +97,7 @@ namespace SimpleSystem.Forms
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(928, 508);
+            this.tabControl1.Size = new System.Drawing.Size(1042, 542);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -96,7 +106,7 @@ namespace SimpleSystem.Forms
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(920, 482);
+            this.tabPage1.Size = new System.Drawing.Size(1034, 516);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Lista de Clientes";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -104,13 +114,16 @@ namespace SimpleSystem.Forms
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.txtobs);
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.comboBox1);
             this.tabPage2.Controls.Add(this.txtrg);
             this.tabPage2.Controls.Add(this.txttelefone);
             this.tabPage2.Controls.Add(this.txtdatanascimento);
             this.tabPage2.Controls.Add(this.txtcnpj);
             this.tabPage2.Controls.Add(this.txtcpf);
             this.tabPage2.Controls.Add(this.labelobs);
-            this.tabPage2.Controls.Add(this.txtobs);
+            this.tabPage2.Controls.Add(this.txtobs1);
             this.tabPage2.Controls.Add(this.groupendereco);
             this.tabPage2.Controls.Add(this.txtcodigo);
             this.tabPage2.Controls.Add(this.txtemail);
@@ -127,10 +140,43 @@ namespace SimpleSystem.Forms
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(920, 482);
+            this.tabPage2.Size = new System.Drawing.Size(1034, 516);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Cliente";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 301);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 13);
+            this.label2.TabIndex = 35;
+            this.label2.Text = "Representante";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DataSource = this.representanteBindingSource;
+            this.comboBox1.DisplayMember = "Nome";
+            this.comboBox1.Enabled = false;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(6, 317);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(325, 21);
+            this.comboBox1.TabIndex = 34;
+            this.comboBox1.ValueMember = "Id_Representante";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // representanteBindingSource
+            // 
+            this.representanteBindingSource.DataMember = "Representante";
+            this.representanteBindingSource.DataSource = this.simpleSystemDataSet;
+            this.representanteBindingSource.CurrentChanged += new System.EventHandler(this.representanteBindingSource_CurrentChanged);
+            // 
+            // simpleSystemDataSet
+            // 
+            this.simpleSystemDataSet.DataSetName = "SimpleSystemDataSet";
+            this.simpleSystemDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // txtrg
             // 
@@ -181,19 +227,20 @@ namespace SimpleSystem.Forms
             // labelobs
             // 
             this.labelobs.AutoSize = true;
-            this.labelobs.Location = new System.Drawing.Point(3, 298);
+            this.labelobs.Location = new System.Drawing.Point(3, 351);
             this.labelobs.Name = "labelobs";
             this.labelobs.Size = new System.Drawing.Size(70, 13);
             this.labelobs.TabIndex = 24;
             this.labelobs.Text = "Observações";
             // 
-            // txtobs
+            // txtobs1
             // 
-            this.txtobs.Enabled = false;
-            this.txtobs.Location = new System.Drawing.Point(6, 317);
-            this.txtobs.Name = "txtobs";
-            this.txtobs.Size = new System.Drawing.Size(82, 20);
-            this.txtobs.TabIndex = 23;
+            this.txtobs1.Enabled = false;
+            this.txtobs1.Location = new System.Drawing.Point(6, 317);
+            this.txtobs1.Name = "txtobs1";
+            this.txtobs1.Size = new System.Drawing.Size(82, 20);
+            this.txtobs1.TabIndex = 23;
+            this.txtobs1.Visible = false;
             // 
             // groupendereco
             // 
@@ -214,7 +261,7 @@ namespace SimpleSystem.Forms
             this.groupendereco.Controls.Add(this.labelnumero);
             this.groupendereco.Controls.Add(this.label1);
             this.groupendereco.Controls.Add(this.btnpesquisarcep);
-            this.groupendereco.Location = new System.Drawing.Point(482, 29);
+            this.groupendereco.Location = new System.Drawing.Point(588, 29);
             this.groupendereco.Name = "groupendereco";
             this.groupendereco.Size = new System.Drawing.Size(429, 435);
             this.groupendereco.TabIndex = 22;
@@ -399,18 +446,18 @@ namespace SimpleSystem.Forms
             this.labelcpf.AutoSize = true;
             this.labelcpf.Location = new System.Drawing.Point(3, 84);
             this.labelcpf.Name = "labelcpf";
-            this.labelcpf.Size = new System.Drawing.Size(23, 13);
+            this.labelcpf.Size = new System.Drawing.Size(27, 13);
             this.labelcpf.TabIndex = 9;
-            this.labelcpf.Text = "Cpf";
+            this.labelcpf.Text = "CPF";
             // 
             // labelrg
             // 
             this.labelrg.AutoSize = true;
             this.labelrg.Location = new System.Drawing.Point(3, 127);
             this.labelrg.Name = "labelrg";
-            this.labelrg.Size = new System.Drawing.Size(21, 13);
+            this.labelrg.Size = new System.Drawing.Size(23, 13);
             this.labelrg.TabIndex = 8;
-            this.labelrg.Text = "Rg";
+            this.labelrg.Text = "RG";
             // 
             // labeltelefone
             // 
@@ -461,7 +508,7 @@ namespace SimpleSystem.Forms
             // 
             this.checkjuridica.AutoSize = true;
             this.checkjuridica.Enabled = false;
-            this.checkjuridica.Location = new System.Drawing.Point(809, 6);
+            this.checkjuridica.Location = new System.Drawing.Point(430, 6);
             this.checkjuridica.Name = "checkjuridica";
             this.checkjuridica.Size = new System.Drawing.Size(102, 17);
             this.checkjuridica.TabIndex = 1;
@@ -473,7 +520,7 @@ namespace SimpleSystem.Forms
             // 
             this.checkfisica.AutoSize = true;
             this.checkfisica.Enabled = false;
-            this.checkfisica.Location = new System.Drawing.Point(687, 6);
+            this.checkfisica.Location = new System.Drawing.Point(308, 6);
             this.checkfisica.Name = "checkfisica";
             this.checkfisica.Size = new System.Drawing.Size(91, 17);
             this.checkfisica.TabIndex = 0;
@@ -487,7 +534,7 @@ namespace SimpleSystem.Forms
             this.btnsair.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnsair.BackgroundImage")));
             this.btnsair.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnsair.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnsair.Location = new System.Drawing.Point(849, 517);
+            this.btnsair.Location = new System.Drawing.Point(947, 548);
             this.btnsair.Name = "btnsair";
             this.btnsair.Size = new System.Drawing.Size(75, 24);
             this.btnsair.TabIndex = 1;
@@ -501,7 +548,7 @@ namespace SimpleSystem.Forms
             this.btnincluir.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnincluir.BackgroundImage")));
             this.btnincluir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnincluir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnincluir.Location = new System.Drawing.Point(525, 517);
+            this.btnincluir.Location = new System.Drawing.Point(542, 549);
             this.btnincluir.Name = "btnincluir";
             this.btnincluir.Size = new System.Drawing.Size(75, 24);
             this.btnincluir.TabIndex = 2;
@@ -515,7 +562,7 @@ namespace SimpleSystem.Forms
             this.btnexcluir.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnexcluir.BackgroundImage")));
             this.btnexcluir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnexcluir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnexcluir.Location = new System.Drawing.Point(606, 517);
+            this.btnexcluir.Location = new System.Drawing.Point(704, 548);
             this.btnexcluir.Name = "btnexcluir";
             this.btnexcluir.Size = new System.Drawing.Size(75, 24);
             this.btnexcluir.TabIndex = 3;
@@ -529,7 +576,7 @@ namespace SimpleSystem.Forms
             this.btnsalvar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnsalvar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnsalvar.Enabled = false;
-            this.btnsalvar.Location = new System.Drawing.Point(687, 517);
+            this.btnsalvar.Location = new System.Drawing.Point(785, 548);
             this.btnsalvar.Name = "btnsalvar";
             this.btnsalvar.Size = new System.Drawing.Size(75, 24);
             this.btnsalvar.TabIndex = 4;
@@ -544,7 +591,7 @@ namespace SimpleSystem.Forms
             this.btncancelar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btncancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btncancelar.Enabled = false;
-            this.btncancelar.Location = new System.Drawing.Point(768, 517);
+            this.btncancelar.Location = new System.Drawing.Point(866, 548);
             this.btncancelar.Name = "btncancelar";
             this.btncancelar.Size = new System.Drawing.Size(75, 24);
             this.btncancelar.TabIndex = 5;
@@ -553,12 +600,38 @@ namespace SimpleSystem.Forms
             this.btncancelar.UseVisualStyleBackColor = true;
             this.btncancelar.Click += new System.EventHandler(this.btncancelar_Click);
             // 
+            // representanteTableAdapter
+            // 
+            this.representanteTableAdapter.ClearBeforeFill = true;
+            // 
+            // txtobs
+            // 
+            this.txtobs.Enabled = false;
+            this.txtobs.Location = new System.Drawing.Point(6, 367);
+            this.txtobs.Name = "txtobs";
+            this.txtobs.Size = new System.Drawing.Size(565, 20);
+            this.txtobs.TabIndex = 36;
+            this.txtobs.WordWrap = false;
+            // 
+            // btnalterar
+            // 
+            this.btnalterar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnalterar.BackgroundImage")));
+            this.btnalterar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnalterar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnalterar.Location = new System.Drawing.Point(623, 549);
+            this.btnalterar.Name = "btnalterar";
+            this.btnalterar.Size = new System.Drawing.Size(75, 23);
+            this.btnalterar.TabIndex = 13;
+            this.btnalterar.Text = "     Alterar";
+            this.btnalterar.UseVisualStyleBackColor = true;
+            // 
             // frmCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(945, 551);
+            this.ClientSize = new System.Drawing.Size(1043, 582);
             this.ControlBox = false;
+            this.Controls.Add(this.btnalterar);
             this.Controls.Add(this.btncancelar);
             this.Controls.Add(this.btnsalvar);
             this.Controls.Add(this.btnexcluir);
@@ -573,6 +646,8 @@ namespace SimpleSystem.Forms
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.representanteBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.simpleSystemDataSet)).EndInit();
             this.groupendereco.ResumeLayout(false);
             this.groupendereco.PerformLayout();
             this.ResumeLayout(false);
@@ -619,12 +694,19 @@ namespace SimpleSystem.Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnpesquisarcep;
         private System.Windows.Forms.Label labelobs;
-        private System.Windows.Forms.TextBox txtobs;
+        private System.Windows.Forms.TextBox txtobs1;
         private System.Windows.Forms.TextBox txtcep;
         private System.Windows.Forms.MaskedTextBox txtcpf;
         private System.Windows.Forms.MaskedTextBox txtdatanascimento;
         private System.Windows.Forms.MaskedTextBox txtcnpj;
         private System.Windows.Forms.MaskedTextBox txtrg;
         private System.Windows.Forms.MaskedTextBox txttelefone;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label2;
+        private SimpleSystemDataSet simpleSystemDataSet;
+        private System.Windows.Forms.BindingSource representanteBindingSource;
+        private SimpleSystemDataSetTableAdapters.RepresentanteTableAdapter representanteTableAdapter;
+        private System.Windows.Forms.TextBox txtobs;
+        private System.Windows.Forms.Button btnalterar;
     }
 }

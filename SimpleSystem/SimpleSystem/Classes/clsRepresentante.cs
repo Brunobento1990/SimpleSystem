@@ -110,7 +110,6 @@ namespace SimpleSystem.Classes
 
             try
             {
-                //string Coneccao = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=Bruno;Data Source=ITELABD03\SQLEXPRESS01";
                 using (var cnn = new SqlConnection(this.Conexao))
                 {
 

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -9,7 +10,7 @@ namespace SimpleSystem.Classe
     {
 
         public string Codigo { get; set; }
-        public string Ativo { get; set; }
+        public bool Ativo { get; set; }
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public string Numero { get; set; }
@@ -84,84 +85,109 @@ namespace SimpleSystem.Classe
                 MessageBox.Show("Erro na conexão com o banco de dados" + e.Errors + e.ErrorCode);
             }
         }
-        public clsCliente Carregar(string id)
+        public clsCliente AcharClientePorID(int id)
         {
             try
             {
-                string Coneccao = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=SimpleSystem;Data Source=Bruno";
-                SqlConnection cnn;
-                cnn = new SqlConnection(Coneccao);
-                string Select = "select * from Cliente where Id_Cliente = '" + id + "'";
-                SqlCommand sqlComm = new SqlCommand
+                using (var cnn = new SqlConnection(this.Conexao))
                 {
-                    Connection = cnn,
-                    CommandType = CommandType.Text,
-                    CommandText = Select
-                };
-                sqlComm.Connection.Open();
-                SqlDataReader rdr = sqlComm.ExecuteReader();
-                rdr.Read();
-                int id1 = rdr.GetInt32(0);
-                this.Codigo = id1.ToString();
-                this.Ativo = rdr.GetString(1);
-                this.Nome = rdr.GetString(2);
-                this.Cpf = rdr.GetString(3);
-                this.Numero = rdr.GetString(4);
-                this.Cep = rdr.GetString(5);
-                this.Logradouro = rdr.GetString(6);
-                this.Complemento = rdr.GetString(7);
-                this.Bairro = rdr.GetString(8);
-                this.Localidade = rdr.GetString(9);
-                this.Uf = rdr.GetString(10);
-                this.Ibge = rdr.GetString(11);
-                this.Gia = rdr.GetString(12);
-                this.DDD = rdr.GetString(13);
-                this.Siafi = rdr.GetString(14);
-            }
-            catch (SqlException)
-            {
-                MessageBox.Show("Erro na conexão com o banco de dados");
-            }
 
-            return this;
+                    string sql = "select * from Cliente where Id_Cliente = @id";
+                    SqlCommand sqlComm = new SqlCommand(sql, cnn);
+                    sqlComm.Parameters.AddWithValue("@id", id);
+                    sqlComm.Connection.Open();
+                    sqlComm.ExecuteNonQuery();
+                    SqlDataReader rdr = sqlComm.ExecuteReader();
+                    rdr.Read();
+                    int id1 = rdr.GetInt32(0);
+                    this.Codigo = id1.ToString();
+                    this.Ativo = rdr.GetBoolean(1);
+                    this.Nome = rdr.GetString(2);
+                    this.Cpf = rdr.GetString(3);
+                    this.Numero = rdr.GetString(4);
+                    this.Tipo_Pessoa = rdr.GetString(5);
+                    this.Telefone = rdr.GetString(6);
+                    this.Email = rdr.GetString(7);
+                    this.Data_Nascimento = rdr.GetString(8);
+                    this.Rg = rdr.GetString(9);
+                    this.Obs = rdr.GetString(10);
+                    this.Pais = rdr.GetString(11);
+                    this.Cep = rdr.GetString(12);
+                    this.Logradouro = rdr.GetString(13);
+                    this.Complemento = rdr.GetString(14);
+                    this.Bairro = rdr.GetString(15);
+                    this.Localidade = rdr.GetString(16);
+                    this.Uf = rdr.GetString(17);
+                    this.Id_Reprasentante = rdr.GetInt32(22);
+
+                }
+                return this;
+            }
+            catch (SqlException e)
+            {
+                MessageBox.Show("Cadastro não encontrado!" , "Simple System" + e.Message + e.Errors);
+                return null;
+            }
         }
-        public clsCliente CarregarInicio()
+        public void Alterar(int id)
         {
             try
             {
-                string Coneccao = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=SimpleSystem;Data Source=Bruno";
-                SqlConnection cnn;
-                cnn = new SqlConnection(Coneccao);
-                string Select = "SELECT * FROM Cliente ORDER BY Id_Cliente desc";
-                SqlCommand sqlComm = new SqlCommand();
-                sqlComm.Connection = cnn;
-                sqlComm.CommandType = CommandType.Text;
-                sqlComm.CommandText = Select;
-                sqlComm.Connection.Open();
-                SqlDataReader rdr = sqlComm.ExecuteReader();
-                rdr.Read();
-                int id1 = rdr.GetInt32(0);
-                this.Codigo = id1.ToString();
-                this.Ativo = rdr.GetString(1);
-                this.Nome = rdr.GetString(2);
-                this.Cpf = rdr.GetString(3);
-                this.Numero = rdr.GetString(4);
-                this.Cep = rdr.GetString(5);
-                this.Logradouro = rdr.GetString(6);
-                this.Complemento = rdr.GetString(7);
-                this.Bairro = rdr.GetString(8);
-                this.Localidade = rdr.GetString(9);
-                this.Uf = rdr.GetString(10);
-                this.Ibge = rdr.GetString(11);
-                this.Gia = rdr.GetString(12);
-                this.DDD = rdr.GetString(13);
-                this.Siafi = rdr.GetString(14);
+                using (var cnn = new SqlConnection(this.Conexao))
+                {
+                    string sql = @"update Cliente set Nome = @nome,Cpf = @cpf,Numero = @numero,Tipo_Pessoa = @tipo_Pessoa,Telefone = @telefone,Email = @email,Data_Nascimento = @data_Nascimento,Rg = @rg,Obs = @obs,Pais = @pais,Cep = @cep,Logradouro = @logradouro,
+                    Complemento = @complemento,Bairro = @bairro,Localidade = @localidade,Uf = @uf,Id_Representante = @id_Representante where Id_Cliente = @id";
+                    SqlCommand sqlComm = new SqlCommand(sql, cnn);
+                    sqlComm.Parameters.AddWithValue("@id", id);
+                    sqlComm.Parameters.AddWithValue("@nome", this.Nome);
+                    sqlComm.Parameters.AddWithValue("@cpf", this.Cpf);
+                    sqlComm.Parameters.AddWithValue("@numero", this.Numero);
+                    sqlComm.Parameters.AddWithValue("@tipo_Pessoa", this.Tipo_Pessoa);
+                    sqlComm.Parameters.AddWithValue("@telefone", this.Telefone);
+                    sqlComm.Parameters.AddWithValue("@email", this.Email);
+                    sqlComm.Parameters.AddWithValue("@data_Nascimento", this.Data_Nascimento);
+                    sqlComm.Parameters.AddWithValue("@rg", this.Rg);
+                    sqlComm.Parameters.AddWithValue("@obs", this.Obs);
+                    sqlComm.Parameters.AddWithValue("@pais", this.Pais);
+                    sqlComm.Parameters.AddWithValue("@cep", this.Cep);
+                    sqlComm.Parameters.AddWithValue("@logradouro", this.Logradouro);
+                    sqlComm.Parameters.AddWithValue("@complemento", this.Complemento);
+                    sqlComm.Parameters.AddWithValue("@bairro", this.Bairro);
+                    sqlComm.Parameters.AddWithValue("@localidade", this.Localidade);
+                    sqlComm.Parameters.AddWithValue("@uf", this.Uf);
+                    sqlComm.Parameters.AddWithValue("@id_Representante", this.Id_Reprasentante);
+                    sqlComm.Connection.Open();
+                    sqlComm.ExecuteNonQuery();
+                    MessageBox.Show("Representante atualizado com sucesso!", "Simple System");
+                }
             }
-            catch (SqlException)
+            catch (SqlException e)
             {
-                MessageBox.Show("Erro na conexão com o banco de dados");
+                MessageBox.Show("Erro na conexão com o banco de dados" + e.Errors + e.ErrorCode);
             }
-            return this;
+        }
+        public void Excluir(int id, clsCliente cliente)
+        {
+            if (cliente != null)
+            {
+                try
+                {
+                    using (var cnn = new SqlConnection(this.Conexao))
+                    {
+                        string sql = @"update Cliente set Ativo = @ativo where Id_Cliente = @id";
+                        SqlCommand sqlComm = new SqlCommand(sql, cnn);
+                        sqlComm.Parameters.AddWithValue("@id", id);
+                        sqlComm.Parameters.AddWithValue("@ativo", this.Ativo);
+                        sqlComm.Connection.Open();
+                        sqlComm.ExecuteNonQuery();
+                        MessageBox.Show("Cliente desativado!", "Simple System");
+                    }
+                }
+                catch (SqlException e)
+                {
+                    MessageBox.Show("Erro na conexão com o banco de dados" + e.Errors + e.ErrorCode);
+                }
+            }
         }
     }
 }

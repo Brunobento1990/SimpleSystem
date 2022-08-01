@@ -85,6 +85,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimpleSystemDataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="SimpleSystemDataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleSystemDataSet2.xsd</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\frmCliente.resx">
       <DependentUpon>frmCliente.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,6 +139,17 @@
     </None>
     <None Include="SimpleSystemDataSet1.xss">
       <DependentUpon>SimpleSystemDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="SimpleSystemDataSet2.xsc">
+      <DependentUpon>SimpleSystemDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="SimpleSystemDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SimpleSystemDataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SimpleSystemDataSet2.xss">
+      <DependentUpon>SimpleSystemDataSet2.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

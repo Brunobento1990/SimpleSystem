@@ -67,6 +67,25 @@ namespace SimpleSystem.Forms
         }
         private void LiberarCampo()
         {
+            if (!string.IsNullOrWhiteSpace(txtcodigo.Text))
+            {
+                txtcodigo.Text = string.Empty;
+                txtnome.Text = string.Empty;
+                txtcpf.Text = string.Empty;
+                txtrg.Text = string.Empty;
+                txtdatanascimento.Text = string.Empty;
+                txttelefone.Text = string.Empty;
+                txtemail.Text = string.Empty;
+                txtobs.Text = string.Empty;
+                txtcep.Text = string.Empty;
+                txtlogradouro.Text = string.Empty;
+                txtbairro.Text = string.Empty;
+                txtuf.Text = string.Empty;
+                txtrua.Text = string.Empty;
+                txtnumero.Text = string.Empty;
+                txtcomplemento.Text = string.Empty;
+                txtpais.Text = string.Empty;
+            }
             txtnome.Enabled = true;
             txtcpf.Enabled = true;
             txtrg.Enabled = true;
